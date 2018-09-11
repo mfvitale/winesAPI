@@ -29,4 +29,10 @@ public class WineController {
 
         return wineService.addToCatalog(wine);
     }
+
+    @RequestMapping(path = "/catalog/{wineId}", method = DELETE)
+    public List<Wine> removeWine(@PathVariable(name = "wineId") String id) {
+
+        return wineService.removeWine(id);
+    }
 }

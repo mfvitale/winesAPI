@@ -4,6 +4,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Component
@@ -36,7 +37,7 @@ public class WineRepository implements Repository<Wine> {
     public List<Wine> query(StreamSpecification<Wine> specification) {
 
         return catalog.stream()
-                .filter(specification.toPredicate())
+                .filter((Predicate<? super Wine>) specification.toPredicate())
                 .collect(Collectors.toList());
     }
 }

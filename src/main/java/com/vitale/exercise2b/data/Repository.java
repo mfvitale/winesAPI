@@ -2,11 +2,11 @@ package com.vitale.exercise2b.data;
 
 import java.util.List;
 
-public interface Repository<T> {
+public interface Repository<T extends Querable> {
 
     List<T> add(T item);
     void remove(T item);
     void update(T item);
 
-    List<T> query(StreamSpecification<T> specification);
+    List<? extends Querable> query(StreamSpecification<T> specification);
 }

@@ -1,6 +1,7 @@
 package com.vitale.exercise2b.services;
 
 import com.vitale.exercise2b.data.AllSpecification;
+import com.vitale.exercise2b.data.ByIdSpecification;
 import com.vitale.exercise2b.data.Wine;
 import com.vitale.exercise2b.data.WineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,5 +25,17 @@ public class WineService {
     public List<Wine> addToCatalog(Wine wine) {
 
         return wineRepository.add(wine);
+    }
+
+    public List<Wine> removeWine(String id) {
+
+        List<Wine> wineList = wineRepository.query(new ByIdSpecification<>(id));
+
+        if(!wineList.isEmpty()) {
+
+            wineRepository.remove(wineList.get(0));
+        }
+
+        return wineRepository.query(new AllSpecification<>());
     }
 }
