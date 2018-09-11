@@ -24,7 +24,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @WebMvcTest(WineController.class)
-public class WineRestControllerIntegrationTest   {
+public class WineRestControllerTest {
 
     @Autowired
     private MockMvc mvc;

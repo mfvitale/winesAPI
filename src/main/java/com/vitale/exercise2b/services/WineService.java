@@ -17,7 +17,7 @@ public class WineService {
 
     public List<Wine> getCatalog() {
 
-        AllSpecification<Wine> allWine =  new AllSpecification<Wine>();
+        AllSpecification<Wine> allWine =  new AllSpecification<>();
 
         return wineRepository.query(allWine);
     }
