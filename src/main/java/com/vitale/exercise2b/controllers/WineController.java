@@ -1,6 +1,6 @@
 package com.vitale.exercise2b.controllers;
 
-import com.vitale.exercise2b.data.Wine;
+import com.vitale.exercise2b.model.Wine;
 import com.vitale.exercise2b.services.WineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;

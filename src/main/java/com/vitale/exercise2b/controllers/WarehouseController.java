@@ -1,6 +1,6 @@
 package com.vitale.exercise2b.controllers;
 
-import com.vitale.exercise2b.data.Order;
+import com.vitale.exercise2b.model.Order;
 import com.vitale.exercise2b.services.WarehouseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;

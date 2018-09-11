@@ -1,4 +1,4 @@
-package com.vitale.exercise2b.data;
+package com.vitale.exercise2b.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

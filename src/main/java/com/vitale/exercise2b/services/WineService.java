@@ -1,9 +1,9 @@
 package com.vitale.exercise2b.services;
 
-import com.vitale.exercise2b.data.AllSpecification;
-import com.vitale.exercise2b.data.ByIdSpecification;
-import com.vitale.exercise2b.data.Wine;
-import com.vitale.exercise2b.data.WineRepository;
+import com.vitale.exercise2b.repository.generic.AllSpecification;
+import com.vitale.exercise2b.repository.generic.ByIdSpecification;
+import com.vitale.exercise2b.model.Wine;
+import com.vitale.exercise2b.repository.WineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

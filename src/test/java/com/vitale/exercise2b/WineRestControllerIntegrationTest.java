@@ -1,6 +1,7 @@
 package com.vitale.exercise2b;
 
 import com.vitale.exercise2b.controllers.WineController;
+import com.vitale.exercise2b.model.Wine;
 import com.vitale.exercise2b.services.WineService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,11 +12,14 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
-import static org.hamcrest.CoreMatchers.containsString;
-import static org.mockito.BDDMockito.given;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
@@ -29,14 +33,22 @@ public class WineRestControllerIntegrationTest   {
     private WineService service;
 
     @Test
-    public void passing_name_will_return_hello_name()
+    public void get_wines_list()
             throws Exception {
 
-        when(service.greet("mario")).thenReturn("hello mario");
+        List<Wine>  wines = Arrays.asList(new Wine("1", "Barolo", "red"), new Wine("2", "Falanghina", "white"));
 
-        mvc.perform(MockMvcRequestBuilders.get("/hello/mario")
+        when(service.getCatalog()).thenReturn(wines);
+
+        mvc.perform(MockMvcRequestBuilders.get("/catalog")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(MockMvcResultMatchers.content().string(containsString("hello mario")));
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].id", is("1")))
+                .andExpect(jsonPath("$[0].name", is("Barolo")))
+                .andExpect(jsonPath("$[0].type", is("red")))
+                .andExpect(jsonPath("$[1].id", is("2")))
+                .andExpect(jsonPath("$[1].name", is("Falanghina")))
+                .andExpect(jsonPath("$[1].type", is("white")));
     }
 }

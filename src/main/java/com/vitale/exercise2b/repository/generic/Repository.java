@@ -1,4 +1,4 @@
-package com.vitale.exercise2b.data;
+package com.vitale.exercise2b.repository.generic;
 
 import java.util.List;
 

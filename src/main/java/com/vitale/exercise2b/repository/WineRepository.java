@@ -1,5 +1,8 @@
-package com.vitale.exercise2b.data;
+package com.vitale.exercise2b.repository;
 
+import com.vitale.exercise2b.model.Wine;
+import com.vitale.exercise2b.repository.generic.Repository;
+import com.vitale.exercise2b.repository.generic.StreamSpecification;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;

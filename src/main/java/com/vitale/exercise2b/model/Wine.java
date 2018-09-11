@@ -1,6 +1,7 @@
-package com.vitale.exercise2b.data;
+package com.vitale.exercise2b.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.vitale.exercise2b.repository.generic.Querable;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,7 +23,7 @@ public class Wine extends Querable {
     private String type;
 
     @Override
-    String getIdentifier() {
+    protected String getIdentifier() {
         return id;
     }
 }
