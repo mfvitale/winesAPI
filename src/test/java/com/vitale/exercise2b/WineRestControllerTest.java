@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 
 import java.util.Arrays;
 import java.util.List;
@@ -42,8 +43,7 @@ public class WineRestControllerTest {
     @After
     public void cleanUp() throws Exception {
 
-        String result = mvc.perform(get("/catalog")
-                .contentType(MediaType.APPLICATION_JSON))
+        String result = doGet("/catalog")
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
@@ -51,10 +51,7 @@ public class WineRestControllerTest {
                 mapper.getTypeFactory().constructCollectionType(List.class, Wine.class));
 
         for (Wine wine : wines) {
-
-            mvc.perform(delete("/catalog/" + wine.getId())
-                    .contentType(MediaType.APPLICATION_JSON))
-                    .andExpect(status().isOk());
+            doDelete("/catalog/" + wine.getId());
         }
     }
 
@@ -63,18 +60,11 @@ public class WineRestControllerTest {
 
         String wine = mapper.writeValueAsString(wines.get(0));
 
-        mvc.perform(post("/catalog")
-                .contentType(MediaType.APPLICATION_JSON)
-                .content(wine))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)));
+        doPost("/catalog", wine).andExpect(status().isOk())
+                    .andExpect(jsonPath("$", hasSize(1)));
 
-
-        mvc.perform(get("/catalog")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)));
-
+        doGet("/catalog").andExpect(status().isOk())
+               .andExpect(jsonPath("$", hasSize(1)));;
     }
 
     @Test
@@ -82,20 +72,29 @@ public class WineRestControllerTest {
 
         String wine = mapper.writeValueAsString(wines.get(0));
 
-        mvc.perform(post("/catalog")
+        doPost("/catalog", wine).andExpect(status().isOk())
+                    .andExpect(jsonPath("$", hasSize(1)));
+
+        doDelete("/catalog/" +wines.get(0).getId()).andExpect(status().isOk());
+
+        doGet("/catalog").andExpect(status().isOk())
+               .andExpect(jsonPath("$", hasSize(0)));
+
+    }
+
+    private ResultActions doGet(String path) throws Exception {
+        return mvc.perform(get(path)
+                .contentType(MediaType.APPLICATION_JSON));
+    }
+
+    private ResultActions doPost(String path, String wine) throws Exception {
+        return mvc.perform(post(path)
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(wine))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(1)));
+                .content(wine));
+    }
 
-        mvc.perform(delete("/catalog/" + wines.get(0).getId())
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
-
-        mvc.perform(get("/catalog")
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(0)));
-
+    private ResultActions doDelete(String path) throws Exception {
+        return mvc.perform(delete(path)
+                .contentType(MediaType.APPLICATION_JSON));
     }
 }
